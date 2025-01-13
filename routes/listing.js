@@ -42,46 +42,4 @@ router.get(
   wrapAsync(listingController.renderEditForm)
 );
 
-// Index Route
-// router.get("/",wrapAsync(listingController.index));
-
-// New Route
-// router.get("/new", isLoggedIn,listingController.renderNewForm);
-
-// show Route
-// router.get(
-//   "/:id",
-//   wrapAsync(listingController.showListing)
-// );
-
-// // create Route
-// router.post(
-//   "/",
-//   isLoggedIn,
-//   validateListing,
-//   wrapAsync(listingController.createListing)
-// );
-
-// // edit Route
-// router.get(
-//   "/:id/edit",
-//   isLoggedIn,
-//   isOwner,
-//   wrapAsync(listingController.renderEditForm)
-// );
-// // update Route
-// router.put(
-//   "/:id",
-//   isLoggedIn,
-//   isOwner,
-//   wrapAsync(listingController.updateListing)
-// );
-// // delete Route
-// router.delete(
-//   "/:id",
-//   isLoggedIn,
-//   isOwner,
-//   wrapAsync(listingController.destroyListing)
-// );
-
 module.exports = router;
