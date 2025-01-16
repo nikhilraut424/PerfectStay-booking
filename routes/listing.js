@@ -33,7 +33,6 @@ router
   // delete Route
   .delete(isLoggedIn, isOwner, wrapAsync(listingController.destroyListing));
 
-
   // edit Route
 router.get(
   "/:id/edit",
@@ -41,5 +40,6 @@ router.get(
   isOwner,
   wrapAsync(listingController.renderEditForm)
 );
+router.get("/category/:category", isLoggedIn,listingController.category);
 
 module.exports = router;
