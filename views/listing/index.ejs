@@ -1,94 +1,90 @@
 <% layout("/layouts/boilerplate") %>
 
   <body>
-    <!-- <h3>All Listings</h3> -->
-    <!-- <form method="get" action="/listings/new">
-        <button>Create New Listing</button>
-    </form> -->
-    <style>
-      #filters {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-      }
-
-      .filter {
-        margin-right: 2rem;
-        margin-top: 2rem;
-        text-align: center;
-        opacity: 0.7;
-      }
-
-      .filter:hover {
-        opacity: 1;
-        cursor: pointer;
-      }
-
-      .filter p {
-
-        font-size: 0.8rem;
-      }
-      .taxInfo{
-        display: none;
-      }
-      .tax-toggle{
-        border: 1px solid black;
-        border-radius: 1rem;
-        height: 4rem;
-        padding: 1rem;
-        margin-left: 5rem;
-      }
     </style>
     <div id="filters">
       <div class="filter">
-        <div><i class="fa-solid fa-fire"></i></div>
-        <p>Trending</p>
+        <a class="icon" href="/listings/category/Trending"
+          ><div><i class="fa-solid fa-fire-flame-curved"></i></div>
+          Trending
+        </a>
       </div>
       <div class="filter">
-        <div><i class="fa-solid fa-bed"></i></div>
-        <p>Rooms</p>
-
+        <a class="icon" href="/listings/category/Iconic City"
+          ><div><i class="fa-solid fa-city"></i></div>
+          Iconic City
+        </a>
       </div>
       <div class="filter">
-        <div><i class="fa-solid fa-mountain-city"></i></div>
-        <p>Iconic Cities</p>
+        <a class="icon" href="/listings/category/Mountain"
+          ><div><i class="fa-solid fa-mountain-city"></i></div>
+          Mountain</a
+        >
       </div>
       <div class="filter">
-        <div><i class="fa-solid fa-mountain"></i></div>
-        <p>Mountains</p>
+        <a class="icon" href="/listings/category/Castle"
+          ><div><i class="fa-brands fa-fort-awesome"></i></div>
+          Castle</a
+        >
       </div>
       <div class="filter">
-        <div><i class="fa-brands fa-fort-awesome"></i></div>
-        <p>Castles</p>
+        <a class="icon" href="/listings/category/Pool"
+          ><div><i class="fa-solid fa-umbrella-beach"></i></div>
+          Pool</a
+        >
       </div>
       <div class="filter">
-        <div><i class="fa-solid fa-person-swimming"></i></div>
-        <p>Amazing Pools</p>
+        <a class="icon" href="/listings/category/Camping"
+          ><div><i class="fa-solid fa-campground"></i></div>
+          Camping</a
+        >
       </div>
       <div class="filter">
-        <div><i class="fa-solid fa-campground"></i></div>
-        <p>Camping</p>
+        <a class="icon" href="/listings/category/Farm"
+          ><div><i class="fa-solid fa-wheat-awn"></i></div>
+          Farm</a
+        >
       </div>
       <div class="filter">
-        <div><i class="fa-solid fa-cow"></i></div>
-        <p>Farms</p>
+        <a class="icon" href="/listings/category/Arctic"
+          ><div><i class="fa-solid fa-snowflake"></i></div>
+          Arctic</a
+        >
       </div>
       <div class="filter">
-        <div><i class="fa-solid fa-snowflake"></i></div>
-        <p>Arctic</p>
+        <a class="icon" href="/listings/category/Spa"
+          ><div><i class="fa-solid fa-spa"></i></div>
+          Spa</a
+        >
       </div>
       <div class="filter">
-        <div><i class="fa-solid fa-cow"></i></div>
-        <p>Farms</p>
+        <a class="icon" href="/listings/category/Adventure"
+          ><div><i class="fa-solid fa-hiking"></i></div>
+          Adventure</a
+        >
       </div>
       <div class="filter">
-        <div><i class="fa-solid fa-snowflake"></i></div>
-        <p>Arctic</p>
+        <a class="icon" href="/listings/category/Dining"
+          ><div><i class="fa-solid fa-utensils"></i></div>
+          Dining</a
+        >
+      </div>
+      <div class="filter">
+        <a class="icon" href="/listings/category/Meeting"
+          ><div><i class="fa-solid fa-handshake"></i></div>
+          Meeting</a
+        >
       </div>
       <div class="tax-toggle">
-        <div class="form-check form-switch form-check-reverse">
-          <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse">
-          <label class="form-check-label" for="flexSwitchCheckReverse">Display total after taxes</label>
+        <div class="form-check-reverse form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault" />
+          <label class="form-check-label" for="flexSwitchCheckDefault"
+            >Display Total After Taxes</label
+          >
         </div>
       </div>
     </div>
@@ -115,15 +111,8 @@
 
         <% } %>
 
-          <!-- <ul>
-        <% for(let listing of allListings) {%>
-          <a href="/listings/<%= listing._id %>"><li><%= listing.title %></li></a> 
-           <% } %>
-        
-    </ul> -->
-
     <script>
-let taxSwitch=document.getElementById("flexSwitchCheckReverse");
+let taxSwitch=document.getElementById("flexSwitchCheckDefault");
 taxSwitch.addEventListener("click",()=>{
   let taxInfo=document.getElementsByClassName("taxInfo");
   for(let info of taxInfo){
