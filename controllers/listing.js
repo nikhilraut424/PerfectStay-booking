@@ -1,11 +1,22 @@
 const Listing = require("../models/listing.js");
-
-
-
-
+const mongoose=require("mongoose");
 module.exports.index = async (req, res) => {
-  const allListings = await Listing.find({});
-  res.render("listing/index.ejs",{allListings});
+	const categories = [
+		"Trending",
+		"Iconic City",
+		"Mountain",
+		"Castle",
+		"Pool",
+		"Camping",
+		"Farm",
+		"Arctic",
+		"Spa",
+		"Adventure",
+		"Dining",
+		"Meeting",
+	];
+	const allListings = await Listing.find({});
+	res.render("listing/index.ejs", { allListings, categories });
 };
 
 module.exports.renderNewForm = (req, res) => {
@@ -13,6 +24,10 @@ module.exports.renderNewForm = (req, res) => {
 };
 module.exports.showListing = async (req, res) => {
   let { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+		req.flash("error", "Invalid Listing ID.");
+		return res.redirect("/listings"); // Redirect to listings page if the ID is invalid
+	}
   const listing = await Listing.findById(id)
     .populate({
       path: "reviews",
@@ -20,7 +35,7 @@ module.exports.showListing = async (req, res) => {
         path: "author",
       },
     })
-    .populate("owner").populate("category");
+    .populate("owner");
   if (!listing) {
     req.flash("error", "Listing you requested does not exist!");
     res.redirect("/listings");
@@ -32,27 +47,10 @@ module.exports.createListing = async (req, res, next) => {
   if (!req.body.listing) {
     throw new ExpressError(400, "Send valid data for listing");
   }
-;
+
   let url=req.file.path;
   let filename=req.file.filename;
   let newlisting = new Listing(req.body.listing);
-  //  validation for schema
-  // if(!newlisting.title){
-  //   throw new ExpressError(400,"Title is missing!");
-  // }
-  // if(!newlisting.description){
-  //   throw new ExpressError(400,"Description is missing!");
-  // }
-  // if(!newlisting.price){
-  //   throw new ExpressError(400,"Price is missing!");
-  // }
-  // if(!newlisting.location){
-  //   throw new ExpressError(400,"Location is missing!");
-  // }
-  // if(!newlisting.country){
-  //   throw new ExpressError(400,"Country is missing!");
-  // }
-
   newlisting.owner = req.user._id; //passport save user detailed
   newlisting.image={url,filename};
   await newlisting.save();
@@ -94,4 +92,27 @@ module.exports.destroyListing = async (req, res) => {
   console.log(deletelist);
   req.flash("success", " Listing Deleted!");
   res.redirect("/listings");
+};
+
+module.exports.category=async (req, res) => {
+	const { category } = req.params; // Get the category from the URL
+
+	try {
+		// Find listings that belong to the selected category
+		const listings = await Listing.find({ category: category });
+
+		if (listings.length === 0) {
+			req.flash(
+				"error",
+				`No locations currently available in ${category}. Be the first to add a new location in this category!`
+			);
+			return res.redirect("/listings/new");
+		}
+
+		// Render the listings for the selected category
+		res.render("listing/category", { category, listings });
+	} catch (err) {
+		console.error(err);
+		res.status(500).send("Server Error");
+	}
 };
